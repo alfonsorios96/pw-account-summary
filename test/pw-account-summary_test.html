@@ -19,31 +19,32 @@
       </template>
     </test-fixture>
 
-    <test-fixture id="ChangedPropertyTestFixture">
-      <template>
-        <pw-account-summary prop1="new-prop1"></pw-account-summary>
-      </template>
-    </test-fixture>
-
     <script>
       suite('pw-account-summary', () => {
 
-        test('instantiating the element with default properties works', () => {
           const element = fixture('BasicTestFixture');
-          assert.equal(element.prop1, 'pw-account-summary');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello pw-account-summary!');
-        });
 
-        test('setting a property on the element works', () => {
-          // Create a test fixture
-          const element = fixture('ChangedPropertyTestFixture');
-          assert.equal(element.prop1, 'new-prop1');
-          const elementShadowRoot = element.shadowRoot;
-          const elementHeader = elementShadowRoot.querySelector('h2');
-          assert.equal(elementHeader.innerHTML, 'Hello new-prop1!');
-        });
+          suite('payBill method', () => {
+              test('Fired an event with all credit card data', () => {
+                    element.addEventListener('payment-done', (event) => {
+                        let payload = event.detail;
+                        assert.deepEqual(payload, {
+                            user: {
+                                name: ''
+                            },
+                            statementDate: '',
+                            dueDate: '',
+                            creditLimit: 0,
+                            allowedCredit: 0,
+                            minimumPayment: 0,
+                            cardnumber: '',
+                            expireDate: '',
+                            ccv: ''
+                        });
+                    });
+                    element.payBill();
+                });
+          });
 
       });
     </script>

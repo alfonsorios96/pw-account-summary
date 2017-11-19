@@ -1,7 +1,7 @@
 {
   "name": "pw-account-summary",
   "main": "pw-account-summary.html",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "dependencies": {
     "polymer": "Polymer/polymer#2.2.0",
     "paper-card": "PolymerElements/paper-card#2.0.0",
@@ -13,12 +13,14 @@
   "devDependencies": {
     "iron-demo-helpers": "PolymerElements/iron-demo-helpers#2.0.0",
     "web-component-tester": "Polymer/web-component-tester#6.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.2"
+    "webcomponentsjs": "webcomponents/webcomponentsjs#1.0.2",
+    "chai": "4.1.2"
   },
   "resolutions": {
     "polymer": "2.2.0",
     "paper-card": "2.0.0",
     "font-roboto": "1.0.1",
-    "paper-ripple": "1 - 2"
+    "paper-ripple": "1 - 2",
+    "chai": "4.1.2"
   }
 }
