@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
 
@@ -13,18 +13,28 @@
     <link rel="import" href="../pw-account-summary.html">
 
     <custom-style>
-      <style is="custom-style" include="demo-pages-shared-styles">
-      </style>
+        <style is="custom-style" include="demo-pages-shared-styles">
+        </style>
     </custom-style>
-  </head>
-  <body>
-    <div class="vertical-section-container centered">
-      <h3>Basic pw-account-summary demo</h3>
-      <demo-snippet>
+</head>
+<body>
+<div class="vertical-section-container centered">
+    <h3>Basic pw-account-summary demo</h3>
+    <demo-snippet>
         <template>
-          <pw-account-summary></pw-account-summary>
+            <pw-account-summary credit-card='{
+            "user": {"name": "Alfonso Ríos"},
+                "cardnumber": "5204 1650 8320 1243",
+        "expireDate": "12/22",
+        "ccv": "993",
+        "statementDate": "22/10",
+        "dueDate": "17/11",
+        "minimumPayment": "4000",
+        "creditLimit": "10000",
+        "allowedCredit": "6000"
+        }'></pw-account-summary>
         </template>
-      </demo-snippet>
-    </div>
-  </body>
+    </demo-snippet>
+</div>
+</body>
 </html>

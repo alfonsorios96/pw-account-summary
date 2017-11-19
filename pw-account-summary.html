@@ -1,36 +1,145 @@
 <link rel="import" href="../polymer/polymer-element.html">
+<link rel="import" href="../paper-card/paper-card.html">
+<link rel="import" href="../paper-button/paper-button.html">
+<link rel="import" href="../paper-item/paper-item.html">
+<link rel="import" href="../titanium-currency/titanium-currency.html">
+<link rel="import" href="../iron-icons/iron-icons.html">
 
 <dom-module id="pw-account-summary">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <h2>Hello [[prop1]]!</h2>
-  </template>
+    <template>
+        <style>
+            .container {
+                width: 100%;
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+            }
 
-  <script>
-    /**
-     * `pw-account-summary`
-     * 
-     *
-     * @customElement
-     * @polymer
-     * @demo demo/index.html
-     */
-    class PwAccountSummary extends Polymer.Element {
-      static get is() { return 'pw-account-summary'; }
-      static get properties() {
-        return {
-          prop1: {
-            type: String,
-            value: 'pw-account-summary'
-          }
-        };
-      }
-    }
+            .credit-card-data {
+                width: 45%;
+            }
 
-    window.customElements.define(PwAccountSummary.is, PwAccountSummary);
-  </script>
+            .credit-card-information {
+                width: 55%;
+            }
+
+            .paymentButton {
+                --paper-button: {
+                    background-color: #0b97c4;
+                    color: white;
+                    width: 100%;
+                }
+            }
+
+            .credit-card-data .card-content {
+                display: flex;
+                flex-direction: column;
+                background-color: #F48FB1;
+                color: #3F51B5;
+                width: 80%;
+                height: 120px;
+                border-radius: 10px 5px 0 10px;
+                font-size: 18px;
+                margin: 10px;
+            }
+
+            .credit-card-data .card-content p {
+                font-size: 22px;
+                margin-top: 10px;
+            }
+        </style>
+        <div class="container">
+            <paper-card heading="Tarjeta de Crédito *897" class="credit-card-data">
+                <div class="card-content">
+                    <p>
+                        <iron-icon icon="icons:polymer"></iron-icon>
+                        PolyWalletBank
+                    </p>
+                    <span>[[creditCard.cardnumber]]</span>
+                    <span>[[creditCard.user.name]]</span>
+                    <span>[[creditCard.expireDate]]</span>
+                </div>
+                <div class="card-actions">
+                    <paper-button class="paymentButton" on-tap="payBill">Pagar tarjeta</paper-button>
+                </div>
+            </paper-card>
+            <paper-card heading="Información importante" class="credit-card-information">
+                <div class="card-content">
+                    <paper-item>Fecha de corte: <strong>[[creditCard.statementDate]]</strong></paper-item>
+                    <paper-item>Fecha límite de pago: <strong>[[creditCard.dueDate]]</strong></paper-item>
+                    <paper-item>Crédito total:
+                        <strong>
+                            <titanium-currency value="[[creditCard.creditLimit]]"
+                                               decimal-places="2"
+                                               thousands-separators>
+                            </titanium-currency>
+                        </strong>
+                    </paper-item>
+                    <paper-item>Crédito disponible:
+                        <strong>
+                            <titanium-currency value="[[creditCard.allowedCredit]]"
+                                               decimal-places="2"
+                                               thousands-separators>
+                            </titanium-currency>
+                        </strong>
+                    </paper-item>
+                    <paper-item>Pago mínimo:
+                        <strong>
+                            <titanium-currency value="[[creditCard.minimumPayment]]"
+                                               decimal-places="2"
+                                               thousands-separators>
+                            </titanium-currency>
+                        </strong>
+                    </paper-item>
+                </div>
+            </paper-card>
+        </div>
+    </template>
+
+    <script>
+        /**
+         * `pw-account-summary`
+         *
+         *
+         * @customElement
+         * @polymer
+         * @demo demo/index.html
+         */
+        class PwAccountSummary extends Polymer.Element {
+            static get is() {
+                return 'pw-account-summary';
+            }
+
+            static get properties() {
+                return {
+                    creditCard: {
+                        type: Object,
+                        value: {
+                            user: {
+                                name: ''
+                            },
+                            statementDate: '',
+                            dueDate: '',
+                            creditLimit: 0,
+                            allowedCredit: 0,
+                            minimumPayment: 0,
+                            cardnumber: '',
+                            expireDate: '',
+                            ccv: ''
+                        }
+                    }
+                };
+            }
+
+            payBill() {
+                this.dispatchEvent(new CustomEvent('payment-done', {
+                    bubbles: true,
+                    composed: true,
+                    detail: this.creditCard
+                }));
+            }
+        }
+
+        window.customElements.define(PwAccountSummary.is, PwAccountSummary);
+    </script>
 </dom-module>
